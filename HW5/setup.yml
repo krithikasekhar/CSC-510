@@ -1,0 +1,18 @@
+---
+- hosts: all
+  tasks:
+    - name: Install Git
+      apt: pkg=git state=present
+    - name: Cloning Github repo
+      git: repo=https://github.com/CSC-DevOps/App clone=yes dest=/home/githubrepo
+    - name: Install NPM
+      apt: pkg=npm state=present update_cache=true cache_valid_time=1500
+    - name: Install Node
+      apt: pkg=node state=present update_cache=true cache_valid_time=1500
+    - name: SymLink
+      #file: src=/usr/bin/nodejs dest=/usr/bin/node state=link
+      command: ln -fs /usr/bin/nodejs /usr/sbin/node
+    - name: Install Forever
+      npm: name=forever state=present global=yes
+    - name: Install Packages
+      npm: path=/home/githubrepo/

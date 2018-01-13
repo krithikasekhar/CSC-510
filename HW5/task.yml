@@ -1,0 +1,17 @@
+---
+- hosts: all
+  tasks:
+    - name: Running main.js forever
+      command: forever start /home/githubrepo/main.js 12345
+    - name: Ensuring the latest version of bash
+      apt: pkg=bash state=latest update_cache=true cache_valid_time=1500
+    - name: Ensuring the latest version of openssl
+      apt: pkg=openssl state=latest update_cache=true cache_valid_time=1500
+    - name: Ensuring the latest version of openssh-client
+      apt: pkg=openssh-client state=latest update_cache=true
+    - name: Ensuring the latest version of openssh-server
+      apt: pkg=openssh-server state=latest update_cache=true
+    - name: Remove content in /tmp/* folder
+      file: path=/tmp/ state=absent
+    - name: Create tmp directory again
+      file: path=/tmp/ state=directory
